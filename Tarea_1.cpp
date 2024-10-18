@@ -72,7 +72,7 @@ try {
     }
     
     //Une todos los threads creados
-    for (size_t i = 0; i < numeros_autos; ++i) {
+    for (size_t i = 0; i < numero_autos; ++i) {
     autos[i].join(); 
 }
 	cout << "Ranking final: \n";
