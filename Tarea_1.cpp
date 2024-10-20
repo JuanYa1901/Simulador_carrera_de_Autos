@@ -21,13 +21,13 @@ mutex mtx;
 void pistaDeCarreras(int id, int distancia_total, int &resultado, vector<int> &arreglo) {
     random_device rd;
     mt19937 gen(rd());
-    uniform_int_distribution<> dist(1, 10);
+    uniform_int_distribution<> dist(1, 10);//se limita que los números randoms deben ser entre 1 a 10
     uniform_int_distribution<> tiempo(100, 500);
 
     int distancia_recorrida = 0;
     
     while (distancia_recorrida < distancia_total) {
-        int avance = dist(gen);
+        int avance = dist(gen);//se ingresan números randoms
         distancia_recorrida += avance;
         cout << "Auto " << id << " avanza " << avance << " metros (total: " << distancia_recorrida << " metros)\n";
         this_thread::sleep_for(chrono::milliseconds(tiempo(gen)));
@@ -57,9 +57,12 @@ int main(int argc, char *argv[]) {
     int numero_autos;
 
     try {
-		//convierte los valores tipo string a un numero entero
+	//convierte los valores tipo string a un numero entero
         distancia_total = stoi(argv[1]);
         numero_autos = stoi(argv[2]);
+	if (distancia_total <= 0 || numero_autos <= 0) {
+        throw invalid_argument("Los valores deben ser mayores que 0.");
+    }
 
     } catch (const invalid_argument &e) {
 
