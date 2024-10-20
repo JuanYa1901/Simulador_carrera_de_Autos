@@ -12,15 +12,15 @@ Este proyecto es un simulador de carrera de autos desarrollado para ser ejecutad
 
 1. Clona el repositorio:
    ```bash
-   git clone https://github.com/usuario/simulador_carrera_de_autos.git
+   git clone https://github.com/JuanYa1901/Simulador_carrera_de_Autos.git
    ```
 2. Navega al directorio del proyecto:
    ```bash
-   cd simulador_carrera_de_autos
+   cd Simulador_carrera_de_Autos
    ```
-3. Compila el proyecto:
+3. Se tiene que ejecutar el comando make:
    ```bash
-   g++ -std=c++11 -o simulador main.cpp -pthread
+   se debe ejecutar el comando make para que se pueda ejecutar
    ```
 
 ## Uso
@@ -28,7 +28,7 @@ Este proyecto es un simulador de carrera de autos desarrollado para ser ejecutad
 Para ejecutar el simulador, usa el siguiente comando:
 
 ```bash
-./simulador <distancia_total> <numero_de_autos>
+./carrera <distancia_total> <numero_de_autos>
 ```
 
 Donde `<distancia_total>` es la distancia total de la carrera en metros y `<numero_de_autos>` es el número de autos participantes.
