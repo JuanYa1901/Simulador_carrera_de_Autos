@@ -20,7 +20,7 @@ Este proyecto es un simulador de carrera de autos desarrollado para ser ejecutad
    ```
 3. Se tiene que ejecutar el comando make:
    ```bash
-   se debe ejecutar el comando make para que se pueda ejecutar
+   make
    ```
 
 ## Uso
