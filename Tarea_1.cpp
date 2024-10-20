@@ -15,8 +15,10 @@ struct Resultado {
     int distancia;      // Distancia recorrida
 };
 
+mutex mtx;
+
 // Función que simula la carrera de un auto
-void pistaDeCarreras(int id, int distancia_total, int &resultado) {
+void pistaDeCarreras(int id, int distancia_total, int &resultado, vector<int> &arreglo) {
     random_device rd;
     mt19937 gen(rd());
     uniform_int_distribution<> dist(1, 10);
@@ -31,8 +33,13 @@ void pistaDeCarreras(int id, int distancia_total, int &resultado) {
         this_thread::sleep_for(chrono::milliseconds(tiempo(gen)));
     }
 
+     {
+        lock_guard<mutex> lock(mtx);  // Protegemos el acceso a "arreglo"
+        arreglo.push_back(id);        // Agregamos el ID del auto en el vector cuando termina
+    }
+
     resultado = distancia_recorrida;
-    cout << "Auto" << id << " ha terminado la carrera.\n";
+    cout << "Auto " << id << " ha terminado la carrera.\n";
 }
 
 //Dentro del int main se ingresan parametros para que se ingresen los datos en la terminal
@@ -50,7 +57,7 @@ int main(int argc, char *argv[]) {
     int numero_autos;
 
     try {
-	//convierte los valores tipo string a un numero entero
+		//convierte los valores tipo string a un numero entero
         distancia_total = stoi(argv[1]);
         numero_autos = stoi(argv[2]);
 
@@ -70,11 +77,12 @@ int main(int argc, char *argv[]) {
     //se crea las hebras según la cantidad de autos que se ingresaron
     vector<thread> autos;
     vector<Resultado> resultados(numero_autos);  // Usamos la estructura Resultado para almacenar id y distancia
-    
+    vector<int> arreglo; 
+
     // Iniciamos las hebras para simular la carrera
     for (int i = 0; i < numero_autos; i++) {
         resultados[i].id = i;  // Asignamos el id del auto
-        autos.emplace_back(pistaDeCarreras, i, distancia_total, ref(resultados[i].distancia));
+        autos.emplace_back(pistaDeCarreras, i, distancia_total, ref(resultados[i].distancia), ref(arreglo));
     }
 
     // Esperamos a que todas las hebras terminen
@@ -82,15 +90,10 @@ int main(int argc, char *argv[]) {
         autos[i].join();
     }
 
-    // Ordenamos los resultados en función de la distancia recorrida (mayor primero)
-    sort(resultados.begin(), resultados.end(), [](const Resultado &a, const Resultado &b) {
-        return a.distancia > b.distancia;  
-    });
 
     // Mostramos el ranking final
-    cout << "Ranking final: \n";
-    for (int i = 0; i < numero_autos; i++) {
-        cout << i + 1 << ". Auto " << resultados[i].id << " con " << resultados[i].distancia << " metros recorridos\n";
+    for (size_t i = 0; i < numero_autos; i++) {
+        cout << "Lugar " << i + 1 << ": Auto " << arreglo[i] << "\n";
     }
 
     return 0;
