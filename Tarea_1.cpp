@@ -27,7 +27,7 @@ void pistaDeCarreras(int id, int distancia_total, int &resultado) {
     while (distancia_recorrida < distancia_total) {
         int avance = dist(gen);
         distancia_recorrida += avance;
-        cout << "Auto" << id << " avanza " << avance << " metros (total: " << distancia_recorrida << " metros)\n";
+        cout << "Auto " << id << " avanza " << avance << " metros (total: " << distancia_recorrida << " metros)\n";
         this_thread::sleep_for(chrono::milliseconds(tiempo(gen)));
     }
 
@@ -50,7 +50,7 @@ int main(int argc, char *argv[]) {
     int numero_autos;
 
     try {
-		//convierte los valores tipo string a un numero entero
+	//convierte los valores tipo string a un numero entero
         distancia_total = stoi(argv[1]);
         numero_autos = stoi(argv[2]);
 
